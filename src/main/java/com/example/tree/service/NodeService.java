@@ -29,7 +29,7 @@ public class NodeService {
     public Node updateNode(Long id, int value) {
         Node node = nodeRepository.findById(id).orElseThrow(() -> new RuntimeException("Node not found"));
         node.setValue(value);
-        return node;
+        return nodeRepository.save(node);
     }
 
     public Node addChildNode(Long parentId, int value) {
