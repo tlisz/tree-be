@@ -1,6 +1,6 @@
 package com.example.tree.controller;
 
-import com.example.tree.entity.Node;
+import com.example.tree.entity.TreeNode;
 import com.example.tree.service.NodeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,9 +14,9 @@ public class NodeController {
     private NodeService nodeService;
 
     @PostMapping
-    public ResponseEntity<Node> createNode(@RequestBody int value) {
-        Node node = nodeService.createNode(value);
-        return new ResponseEntity<>(node, HttpStatus.CREATED);
+    public ResponseEntity<TreeNode> createNode(@RequestBody int value) {
+        TreeNode treeNode = nodeService.createNode(value);
+        return new ResponseEntity<>(treeNode, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")
@@ -26,14 +26,14 @@ public class NodeController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Node> updateNode(@PathVariable Long id, @RequestBody int value) {
-        Node node = nodeService.updateNode(id, value);
-        return ResponseEntity.ok(node);
+    public ResponseEntity<TreeNode> updateNode(@PathVariable Long id, @RequestBody int value) {
+        TreeNode treeNode = nodeService.updateNode(id, value);
+        return ResponseEntity.ok(treeNode);
     }
 
     @PostMapping("/{parentId}")
-    public ResponseEntity<Node> addChildNode(@PathVariable Long parentId, @RequestBody int value) {
-        Node node = nodeService.addChildNode(parentId, value);
-        return new ResponseEntity<>(node, HttpStatus.CREATED);
+    public ResponseEntity<TreeNode> addChildNode(@PathVariable Long parentId, @RequestBody int value) {
+        TreeNode treeNode = nodeService.addChildNode(parentId, value);
+        return new ResponseEntity<>(treeNode, HttpStatus.CREATED);
     }
 }

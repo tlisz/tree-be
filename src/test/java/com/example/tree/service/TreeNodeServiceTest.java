@@ -1,6 +1,6 @@
 package com.example.tree.service;
 
-import com.example.tree.entity.Node;
+import com.example.tree.entity.TreeNode;
 import com.example.tree.repository.NodeRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
-public class NodeServiceTest {
+public class TreeNodeServiceTest {
 
     @Mock
     private NodeRepository nodeRepository;
@@ -26,56 +26,56 @@ public class NodeServiceTest {
     public void testCreateNode() {
 
         // create a test Node object
-        Node node = new Node();
-        node.setValue(10);
+        TreeNode treeNode = new TreeNode();
+        treeNode.setNodeValue(10);
 
-        when(nodeRepository.save(any(Node.class))).thenReturn(node);
+        when(nodeRepository.save(any(TreeNode.class))).thenReturn(treeNode);
 
         // call the createNode() method of the NodeService
         int expectedId = 10;
-        Node savedNode = nodeService.createNode(expectedId);
+        TreeNode savedTreeNode = nodeService.createNode(expectedId);
 
         // verify that the NodeRepository save() method was called exactly once with the same Node object
-        verify(nodeRepository, times(1)).save(any(Node.class));
+        verify(nodeRepository, times(1)).save(any(TreeNode.class));
 
         // assert that the returned Node object is the same as the input Node object
-        assertEquals(node, savedNode);
+        assertEquals(treeNode, savedTreeNode);
     }
 
     @Test
     public void testUpdateNode() {
         // create a test Node object
-        Node node = new Node();
-        node.setValue(10);
+        TreeNode treeNode = new TreeNode();
+        treeNode.setNodeValue(10);
 
         // configure the mock NodeRepository to return the same object when save() is called
-        when(nodeRepository.save(any(Node.class))).thenReturn(node);
-        when(nodeRepository.findById(any(Long.class))).thenReturn(Optional.of(node));
+        when(nodeRepository.save(any(TreeNode.class))).thenReturn(treeNode);
+        when(nodeRepository.findById(any(Long.class))).thenReturn(Optional.of(treeNode));
 
         // call the updateNode() method of the NodeService
-        Node updatedNode = nodeService.updateNode(10l, 2);
+        TreeNode updatedTreeNode = nodeService.updateNode(10l, 2);
 
         // verify that the NodeRepository save() method was called exactly once with the same Node object
-        verify(nodeRepository, times(1)).save(node);
+        verify(nodeRepository, times(1)).save(treeNode);
 
         // assert that the returned Node object is the same as the input Node object
-        assertEquals(node, updatedNode);
+        assertEquals(treeNode, updatedTreeNode);
     }
 
     @Test
     public void testDeleteNode() {
         // create a test Node object
-        Node node = new Node();
-        node.setValue(10);
+        TreeNode treeNode = new TreeNode();
+        treeNode.setNodeValue(10);
 
         // configure the mock NodeRepository to do nothing when delete() is called
-        doNothing().when(nodeRepository).delete(node);
-        when(nodeRepository.findById(any(Long.class))).thenReturn(Optional.of(node));
+        doNothing().when(nodeRepository).delete(treeNode);
+        when(nodeRepository.findById(any(Long.class))).thenReturn(Optional.of(treeNode));
 
         // call the deleteNode() method of the NodeService
         nodeService.deleteNode(10l);
 
         // verify that the NodeRepository delete() method was called exactly once with the same Node object
-        verify(nodeRepository, times(1)).delete(node);
+        verify(nodeRepository, times(1)).delete(treeNode);
     }
 }

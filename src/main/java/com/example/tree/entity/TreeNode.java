@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.data.annotation.Id;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,26 +12,26 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-public class Node {
+public class TreeNode {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private int value;
+    private int nodeValue;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_id")
-    private Node parent;
+    private TreeNode parent;
 
     @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Node> children = new ArrayList<>();
+    private List<TreeNode> children = new ArrayList<>();
 
     public int calculateValue() {
-        int sum = this.value;
-        Node currentNode = this.parent;
-        while (currentNode != null) {
-            sum += currentNode.value;
-            currentNode = currentNode.parent;
+        int sum = this.nodeValue;
+        TreeNode currentTreeNode = this.parent;
+        while (currentTreeNode != null) {
+            sum += currentTreeNode.nodeValue;
+            currentTreeNode = currentTreeNode.parent;
         }
         return sum;
     }
