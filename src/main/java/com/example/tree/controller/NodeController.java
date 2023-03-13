@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/nodes")
 public class NodeController {
@@ -35,5 +37,17 @@ public class NodeController {
     public ResponseEntity<TreeNode> addChildNode(@PathVariable Long parentId, @RequestBody int value) {
         TreeNode treeNode = nodeService.addChildNode(parentId, value);
         return new ResponseEntity<>(treeNode, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<TreeNode> getNode(@PathVariable Long id) {
+        TreeNode treeNode = nodeService.getNode(id);
+        return ResponseEntity.ok(treeNode);
+    }
+
+    @GetMapping("/")
+    public ResponseEntity<List<TreeNode>> getNodes() {
+        List<TreeNode> nodes = nodeService.getAllNodes();
+        return ResponseEntity.ok(nodes);
     }
 }

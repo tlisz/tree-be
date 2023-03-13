@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @Transactional
 public class NodeService {
@@ -40,4 +42,13 @@ public class NodeService {
         parent.getChildren().add(child);
         return nodeRepository.save(child);
     }
+
+    public TreeNode getNode(Long id) {
+        return nodeRepository.findById(id).orElseThrow(() -> new RuntimeException("Node not found"));
+    }
+
+    public List<TreeNode> getAllNodes() {
+        return nodeRepository.findAll();
+    }
+
 }
